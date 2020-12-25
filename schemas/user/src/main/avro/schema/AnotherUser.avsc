@@ -1,0 +1,26 @@
+{
+    "namespace": "org.bg.avro.structures",
+    "type": "record",
+    "name": "AnotherUser",
+    "fields": [
+        {
+            "type": "long",
+            "name": "reportingSystemId",
+            "default": 0
+        },
+        {
+            "name": "userPosition",
+            "type": "org.bg.avro.structures.base.objects.Coordinate"
+        },
+        {
+            "name": "userCurrentTime",
+            "type": "org.bg.avro.structures.base.objects.Time"
+        },
+        {
+            "name": "userPredictedTime",
+            "type": ["null",
+                     "org.bg.avro.structures.base.objects.NullableTime"
+            ]
+        }
+    ]
+}

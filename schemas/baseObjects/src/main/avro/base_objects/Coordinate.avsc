@@ -1,0 +1,19 @@
+{
+    "namespace": "org.bg.avro.structures.base.objects",
+    "type": "record",
+    "name": "Coordinate",
+    "fields": [
+        {
+            "type": "float",
+            "name": "latitude"
+        },
+        {
+            "type": "float",
+            "name": "longitude"
+        },
+        {
+            "type": "float",
+            "name": "altitude"
+        }
+    ]
+}
