@@ -1,0 +1,7 @@
+protocol MyManager {
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/employee.avdl";
+    record Manager {
+      Employee basee;
+      boolean happy = true;
+    }
+}
