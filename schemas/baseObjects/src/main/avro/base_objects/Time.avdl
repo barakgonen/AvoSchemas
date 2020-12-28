@@ -1,0 +1,6 @@
+@namespace("org.bg.avro.structures.base.objects")
+protocol BaseObjects {
+    record Time{
+        long timeMllis;
+    }
+}

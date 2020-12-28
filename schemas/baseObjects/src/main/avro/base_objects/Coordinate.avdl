@@ -1,0 +1,8 @@
+@namespace("org.bg.avro.structures.base.objects")
+protocol Coordinate{
+    record Coordinate {
+        double lat;
+        double lon;
+        double altitude;
+    }
+}

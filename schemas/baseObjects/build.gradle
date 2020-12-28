@@ -16,17 +16,3 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-def generateProtocol = tasks.register("generateProtocol", com.commercehub.gradle.plugin.avro.GenerateAvroProtocolTask) {
-    source file("src/main/avro")
-    include("**/*.avdl")
-    outputDir = file("build/generated-avro-main-avpr")
-}
-
-tasks.register("generateSchema", com.commercehub.gradle.plugin.avro.GenerateAvroSchemaTask) {
-    dependsOn generateProtocol
-    source file("src/main/avro")
-    source file("build/generated-avro-main-avpr")
-    include("**/*.avpr")
-    outputDir = file("build/generated-main-avro-avsc")
-}

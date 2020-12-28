@@ -1,7 +1,15 @@
+@namespace("org.bg.avro.structures.objects")
 protocol MyManager {
-  import idl "../../../../../baseObjects/src/main/avro/base_objects/employee.avdl";
-    record Manager {
-      Employee basee;
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/Employee.avdl";
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/Coordinate.avdl";
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/NullableTime.avdl";
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/Time.avdl";
+
+  record Manager {
+      org.bg.avro.structures.base.objects.Employee employeeProp;
+      org.bg.avro.structures.base.objects.Coordinate position;
+      org.bg.avro.structures.base.objects.NullableTime nullableTime;
+      org.bg.avro.structures.base.objects.Time mustAppearTimeField;
       boolean happy = true;
     }
 }

@@ -1,0 +1,6 @@
+@namespace("org.bg.avro.structures.base.objects")
+protocol NullableTime {
+    record NullableTime{
+        union {null, long} timeMillis;
+    }
+}

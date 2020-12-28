@@ -1,4 +1,5 @@
-protocol MyProtocol {
+@namespace("org.bg.avro.structures.base.objects")
+protocol Employee {
     record Employee {
       string name;
       boolean active = true;

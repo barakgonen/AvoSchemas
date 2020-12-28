@@ -9,6 +9,7 @@ repositories {
     jcenter()
 }
 dependencies {
+    compile project(":schemas:user")
     compile "org.apache.avro:avro:1.10.1"
     // https://mvnrepository.com/artifact/joda-time/joda-time
     compile group: 'joda-time', name: 'joda-time', version: '2.10.8'

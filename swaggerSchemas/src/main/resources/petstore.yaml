@@ -1,0 +1,62 @@
+swagger: "2.0"
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+
+paths:
+  /pet:
+    post:
+      tags:
+        - pet
+      summary: Add a new pet to the store
+      operationId: addPet
+      requestBody:
+        description: Pet object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Manager'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+      get:
+        tags:
+          - pet
+        summary: Add a new pet to the store
+        operationId: addPet
+        requestBody:
+          description: Pet object that needs to be added to the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Manager'
+          required: true
+        responses:
+          '405':
+            description: Invalid input
+            content: { }
+components:
+  schemas:
+    Manager:
+      type: object
+      properties:
+        name:
+          type: string
+          example: doggie
+        salary:
+          type: integer
+        isActive:
+          type: boolean
+          description: pet status in the store

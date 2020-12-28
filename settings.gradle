@@ -14,3 +14,5 @@ include ':schemas:baseObjects'
 include ':schemas:user'
 findProject('schemas/baseObjects')?.name = 'baseObjects'
 findProject('schemas/user')?.name = 'user'
+//include 'swaggerSchemas'
+
