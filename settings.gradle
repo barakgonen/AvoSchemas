@@ -12,6 +12,8 @@ pluginManagement {
 rootProject.name = 'AvroSchemasGradle'
 include ':schemas:baseObjects'
 include ':schemas:user'
+include ':producer'
+
 findProject('schemas/baseObjects')?.name = 'baseObjects'
 findProject('schemas/user')?.name = 'user'
 //include 'swaggerSchemas'

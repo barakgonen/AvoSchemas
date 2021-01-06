@@ -1,0 +1,9 @@
+@namespace("org.bg.avro.structures.base.objects")
+protocol WorkerKind {
+/**
+  TEST ENUM KIND
+ */
+  enum Kind {
+    SQUARE, TRIANGLEE, CIRCLE, FOO
+  } = FOO;
+}

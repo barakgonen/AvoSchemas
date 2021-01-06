@@ -4,6 +4,8 @@ protocol MyManager {
   import idl "../../../../../baseObjects/src/main/avro/base_objects/Coordinate.avdl";
   import idl "../../../../../baseObjects/src/main/avro/base_objects/NullableTime.avdl";
   import idl "../../../../../baseObjects/src/main/avro/base_objects/Time.avdl";
+  import idl "../../../../../baseObjects/src/main/avro/base_objects/EnumTest.avdl";
+  import schema "../../../../../baseObjects/src/main/avro/base_objects/Etest.avsc";
 
   record Manager {
       org.bg.avro.structures.base.objects.Employee employeeProp;
@@ -11,5 +13,6 @@ protocol MyManager {
       org.bg.avro.structures.base.objects.NullableTime nullableTime;
       org.bg.avro.structures.base.objects.Time mustAppearTimeField;
       boolean happy = true;
-    }
+      org.bg.avro.structures.base.objects.Kind workerKind = "TRIANGLEE";
+}
 }
