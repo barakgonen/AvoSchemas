@@ -17,4 +17,5 @@ include ':producer'
 findProject('schemas/baseObjects')?.name = 'baseObjects'
 findProject('schemas/user')?.name = 'user'
 //include 'swaggerSchemas'
+include 'consumer'
 

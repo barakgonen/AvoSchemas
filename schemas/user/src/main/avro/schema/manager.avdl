@@ -13,6 +13,6 @@ protocol MyManager {
       org.bg.avro.structures.base.objects.NullableTime nullableTime;
       org.bg.avro.structures.base.objects.Time mustAppearTimeField;
       boolean happy = true;
-      org.bg.avro.structures.base.objects.Kind workerKind = "TRIANGLEE";
+      org.bg.avro.structures.base.objects.Kind workerKind = "TRIANGLE";
 }
 }

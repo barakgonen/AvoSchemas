@@ -4,6 +4,6 @@ protocol WorkerKind {
   TEST ENUM KIND
  */
   enum Kind {
-    SQUARE, TRIANGLEE, CIRCLE, FOO
+    SQUARE, TRIANGLE, CIRCLE, FOO
   } = FOO;
 }

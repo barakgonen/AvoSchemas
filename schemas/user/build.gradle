@@ -1,14 +1,23 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+}
+
 plugins {
     id 'java'
     id "com.commercehub.gradle.plugin.avro" version "0.22.0"
+    id 'maven-publish'
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+version '2.0-TRIANGLE_WITHOUT_MISTAKE'
 
 repositories {
+    mavenLocal()
     jcenter()
 }
+
 dependencies {
     compile "org.apache.avro:avro:1.10.1"
     // https://mvnrepository.com/artifact/joda-time/joda-time
@@ -39,3 +48,11 @@ dependencies {
 //    include("**/*.avpr")
 //    outputDir = file("build/generated-main-avro-avsc")
 //}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
