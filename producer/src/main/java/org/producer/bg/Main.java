@@ -1,99 +1,93 @@
 package org.producer.bg;
 
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import org.apache.avro.Schema;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.specific.SpecificRecordBase;
-import org.apache.commons.lang3.StringUtils;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.bg.avro.structures.base.objects.Coordinate;
-import org.bg.avro.structures.base.objects.Employee;
-import org.bg.avro.structures.base.objects.NullableTime;
-import org.bg.avro.structures.base.objects.Time;
-import org.bg.avro.structures.objects.Manager;
-import org.joda.time.DateTime;
+import org.bg.avro.structures.base.objects.CoordinateEnumJson;
+import org.bg.avro.structures.base.objects.Suit;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.Serializable;
 import java.util.Properties;
 
 public class Main {
 
-    private static Properties getProducerProps() {
+
+    public static void main(String[] args) throws IOException {
+//        Manager manager = getManager();
+        produceUsingAvroSchemaSerializer();
+//        produceGenericByteArray();
+    }
+
+    private static void produceGenericByteArray() {
+
+        Properties producerConfig = new Properties();
+        producerConfig.put("bootstrap.servers", "localhost:9092");
+        producerConfig.put("client.id", "basic-producer");
+        producerConfig.put("acks", "all");
+        producerConfig.put("retries", "3");
+        producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
+        producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
+
+        SimpleProducer producer = new SimpleProducer(producerConfig, false);
+        String topic = "MY_TEST_TOPIC";
+
+        CoordinateEnumJson f = CoordinateEnumJson.newBuilder()
+                .setPos(
+                        Coordinate.newBuilder().setAltitude(23).setLat(234).setLon(231).build()
+                ).setEnum$(Suit.TRIANGLEYYYY).build();
+        for (int i = 0; i < 5; i++) {
+            producer.send(topic, serialize("BGBG"), serialize(f));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        producer.close();
+    }
+
+    public static byte[] serialize(final Object obj) {
+        return org.apache.commons.lang3.SerializationUtils.serialize((Serializable) obj);
+    }
+
+    private static void produceUsingAvroSchemaSerializer() {
+        // Copy pasted example from official confluent at https://docs.confluent.io/platform/current/schema-registry/serdes-develop/serdes-avro.html
+        // Just changing the record to Manager which is the type i generated from Avro schema
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 org.apache.kafka.common.serialization.StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
-
-//        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-//                io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+                io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put(KafkaAvroSerializerConfig.SCHEMA_REFLECTION_CONFIG, "true");
         props.put("schema.registry.url", "http://192.168.227.132:8081");
-        return props;
-    }
+        KafkaProducer producer = new KafkaProducer(props);
 
-    private static Manager getManager() {
-        return Manager.newBuilder()
-                .setEmployeeProp(Employee.newBuilder()
-                        .setActive(true)
-                        .setSalary(12323)
-                        .setName("bgbg")
-                        .build())
-                .setHappy(true)
-                .setNullableTime(NullableTime.newBuilder().setTimeMillis(DateTime.now().toDateTime().getMillis()).build())
-                .setPosition(Coordinate.newBuilder().setAltitude(23).setLat(233).setLon(2331).build())
-                .setMustAppearTimeField(Time.newBuilder().setTimeMllis(231111111).build())
-                .build();
-    }
-
-    private static <T extends SpecificRecordBase> void produceGenericRecord(String topic, T obj) {
-        KafkaProducer producer = new KafkaProducer(getProducerProps());
-        String key = obj.getSchema().getName();
-        ProducerRecord<Object, T> record = new ProducerRecord<>(topic, key, obj);
         try {
-            producer.send(record);
-        } catch(SerializationException e) {
+            for (int i = 0; i < 1000; i++) {
+                CoordinateEnumJson f = CoordinateEnumJson.newBuilder()
+                        .setPos(
+                                Coordinate.newBuilder().setAltitude(Double.valueOf(i * 0.01)).setLat(Double.MAX_VALUE).setLon(Double.MIN_VALUE).build()
+                        ).setEnum$(Suit.TRIANGLEYYYY).build();
+                ProducerRecord<String, CoordinateEnumJson> record = new ProducerRecord<>("TRIANGLEEE", "key" + i, f);
+                producer.send(record);
+            }
+        } catch (SerializationException e) {
             // may need to do something with it
         }
-// When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
-// then close the producer to free its resources.
+        // When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
+        // then close the producer to free its resources.
         finally {
             producer.flush();
             producer.close();
         }
+
     }
-
-    public static void main(String[] args) throws IOException {
-        Manager manager = getManager();
-//        produceGenericRecord("BYTE_TOPIC", manager);
-
-        KafkaProducer producer = new KafkaProducer(getProducerProps());
-        String key = manager.getSchema().getName();
-        ProducerRecord<Object, byte[]> record = new ProducerRecord<>("BYTE_TOPIC", key, manager.toByteBuffer().array());
-        try {
-            producer.send(record);
-        } catch(SerializationException e) {
-            // may need to do something with it
-        }
-// When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
-// then close the producer to free its resources.
-        finally {
-            producer.flush();
-            producer.close();
-        }
-    }
-
-//        GenericRecord avroRecord = new GenericData.Record(manager.getSchema());
-//        ProducerRecord<Object, Object> record = new ProducerRecord<>("my-bg-topic-avroo", "bggbgb", avroRecord);
-
-// When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
-// then close the producer to free its resources.
-
 
 //        private void <D extends GenericRecord>  produceGenericRecord(String topic, )
 }

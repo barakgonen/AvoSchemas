@@ -4,15 +4,15 @@
     "name": "Coordinate",
     "fields": [
         {
-            "type": "float",
+            "type": "double",
             "name": "latitude"
         },
         {
-            "type": "float",
+            "type": "double",
             "name": "longitude"
         },
         {
-            "type": "float",
+            "type": "double",
             "name": "altitude"
         }
     ]

@@ -14,7 +14,15 @@ repositories {
 }
 dependencies {
 //    compile project(":schemas:user")
-    compile "org.example:user:1.0-SNAPSHOT"
+//    compile "org.example:user:2.0-TRIANGLE_WITHOUT_MISTAKE"
+
+
+    // THIS VERSION TRIANGLE
+//    compile "org.example:baseObjects:1.0-TRIANGLE"
+    compile "org.example:baseObjects:1.0-TRIANGLEYYYY"
+
+    // THIS VERSION TRIANGLEEE
+//    compile "org.example:baseObjects:1.0-TRIANGLEEE"
     compile "org.apache.avro:avro:1.10.1"
     // https://mvnrepository.com/artifact/joda-time/joda-time
     compile group: 'joda-time', name: 'joda-time', version: '2.10.8'

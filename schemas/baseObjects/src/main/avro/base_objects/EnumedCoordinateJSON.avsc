@@ -1,0 +1,16 @@
+{
+    "namespace": "org.bg.avro.structures.base.objects",
+    "type": "record",
+    "name": "CoordinateEnumJson",
+    "fields": [
+        {
+            "type": "org.bg.avro.structures.base.objects.Coordinate",
+            "name": "pos"
+        },
+        {
+            "type": "org.bg.avro.structures.base.objects.Suit",
+            "name": "enum",
+            "default": "TRIANGLEYYYY"
+        }
+    ]
+}
