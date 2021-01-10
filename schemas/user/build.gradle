@@ -6,13 +6,13 @@ buildscript {
 
 plugins {
     id 'java'
-    id "com.commercehub.gradle.plugin.avro" version "0.22.0"
+    id "com.commercehub.gradle.plugin.avro" version "0.9.0"
     id 'maven'
     id 'maven-publish'
 }
 
 group 'org.example'
-version '2.0-TRIANGLE_WITHOUT_MISTAKE'
+version '2.0-TRIANGLE_WITHOUT_MISTAKE_OLD_AVRO'
 
 repositories {
     mavenLocal()
@@ -20,13 +20,14 @@ repositories {
 }
 
 dependencies {
-    compile "org.apache.avro:avro:1.10.1"
+    compile "org.apache.avro:avro:1.8.2"
     // https://mvnrepository.com/artifact/joda-time/joda-time
     compile group: 'joda-time', name: 'joda-time', version: '2.10.8'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+generateAvroJava.source += "$rootDir/schemas/baseObjects/src/main/avro"
 publishing {
     publications {
         mavenJava(MavenPublication) {

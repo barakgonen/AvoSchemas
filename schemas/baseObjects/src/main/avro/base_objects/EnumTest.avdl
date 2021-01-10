@@ -1,9 +1,0 @@
-@namespace("org.bg.avro.structures.base.objects")
-protocol WorkerKind {
-/**
-  TEST ENUM KIND
- */
-  enum Kind {
-    SQUARE, TRIANGLEYYYY, CIRCLE, FOO
-  } = FOO;
-}

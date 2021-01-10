@@ -10,7 +10,7 @@
         {
             "type": "org.bg.avro.structures.base.objects.Suit",
             "name": "enum",
-            "default": "TRIANGLEYYYY"
+            "default": "TRIANGLE"
         }
     ]
 }
