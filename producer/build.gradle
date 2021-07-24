@@ -13,27 +13,21 @@ repositories {
     }
 }
 dependencies {
-//    compile project(":schemas:user")
-//    compile "org.example:user:2.0-TRIANGLE_WITHOUT_MISTAKE"
+    // TRIANGLE
+//    compile "org.example:baseObjects:5.0-EnumCoordinatedDefaultValueEnum"
+//    compile "org.example:baseObjects:5.0-EnumCoordinatedDefaultValueEnumWithBOO"
+    compile "org.example:baseObjects:5.0-EnumCoordinatedWithoutDefaultValueEnumWithBOO"
 
-
-    // THIS VERSION TRIANGLE
-//    compile "org.example:baseObjects:1.0-TRIANGLE"
-    compile "org.example:baseObjects:1.0-TRIANGLEYYYY"
-
-    // THIS VERSION TRIANGLEEE
+    // TRIANGLEEEEEEE
 //    compile "org.example:baseObjects:1.0-TRIANGLEEE"
+
+    // TRIANGLYYYYY
+//    compile "org.example:baseObjects:1.0-TRIANGLEYYYY_OLD_AVRO"
+
+    // FOR MASHOV
     compile "org.apache.avro:avro:1.10.1"
-    // https://mvnrepository.com/artifact/joda-time/joda-time
     compile group: 'joda-time', name: 'joda-time', version: '2.10.8'
-
-// https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
-// https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer
     compile group: 'io.confluent', name: 'kafka-avro-serializer', version: '6.0.1'
-// https://mvnrepository.com/artifact/io.confluent/kafka-schema-serializer
-    compile group: 'io.confluent', name: 'kafka-schema-serializer', version: '6.0.1'
-
-    compile 'org.apache.commons:commons-lang3:3.6'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

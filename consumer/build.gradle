@@ -20,32 +20,23 @@ repositories {
 }
 
 dependencies {
-    // THIS VERSION TRIANGLE
-    compile "org.example:baseObjects:1.0-TRIANGLE"
+    // TRIANGLE
+//    compile "org.example:baseObjects:1.0-TRIANGLE_OLD_AVRO"
 
-    // THIS VERSION TRIANGLEEE
-//    compile "org.example:baseObjects:1.0-1.0-TRIANGLEYYYY"
+    // TRIANGLEEEEEEE
+//    compile "org.example:baseObjects:1.0-TRIANGLEEE_OLD_AVRO"
 
-//    compile "org.example:baseObjects:1.0-TRIANGLEYYYY"
-//    compile "org.example:user:1.0-SNAPSHOT"
+    // TRIANGLYYYYY
+//    compile "org.example:baseObjects:5.0-EnumCoordinatedDefaultValueEnumWithBOO"
+//    compile "org.example:baseObjects:5.0-EnumCoordinatedDefaultValueEnum"
+    compile "org.example:baseObjects:5.0-EnumCoordinatedWithoutDefaultValueEnum"
+
+    // FOR MASHOV
     compile "org.apache.avro:avro:1.10.1"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'joda-time', name: 'joda-time', version: '2.10.8'
-// https://mvnrepository.com/artifact/org.apache.avro/avro-compiler
-    compile group: 'org.apache.avro', name: 'avro-compiler', version: '1.10.1'
-// https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin
-    compile group: 'org.apache.avro', name: 'avro-maven-plugin', version: '1.10.1'
-// https://mvnrepository.com/artifact/org.apache.avro/avro-tools
-    compile group: 'org.apache.avro', name: 'avro-tools', version: '1.10.1'
-
-    compile group: 'org.apache.avro', name: 'avro', version: '1.10.1'
-
-
-// https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+    compile group: 'org.apache.kafka', name: 'kafka_2.13', version: '2.7.0'
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.7.0'
-// https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer
     compile group: 'io.confluent', name: 'kafka-avro-serializer', version: '6.0.1'
-
-    compile 'org.apache.commons:commons-lang3:3.6'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }

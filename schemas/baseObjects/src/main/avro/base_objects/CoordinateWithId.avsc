@@ -1,0 +1,15 @@
+{
+    "namespace": "org.bg.avro.structures.base.objects",
+    "type": "record",
+    "name": "CoordinateWithId",
+    "fields": [
+        {
+            "type": "org.bg.avro.structures.base.objects.Coordinate",
+            "name": "position"
+        },
+        {
+            "type": "string",
+            "name": "id"
+        }
+    ]
+}

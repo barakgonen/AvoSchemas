@@ -7,10 +7,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.bg.avro.structures.base.objects.Coordinate;
 import org.bg.avro.structures.base.objects.CoordinateEnumJson;
+import org.bg.avro.structures.base.objects.CoordinateWithEnum;
 import org.bg.avro.structures.base.objects.Suit;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Properties;
 
 public class Main {
@@ -18,14 +18,16 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 //        Manager manager = getManager();
-        produceUsingAvroSchemaSerializer();
+//        produceUsingAvroSchemaSerializer();
+
+        confluentProducer();
 //        produceGenericByteArray();
     }
 
     private static void produceGenericByteArray() {
 
         Properties producerConfig = new Properties();
-        producerConfig.put("bootstrap.servers", "localhost:9092");
+        producerConfig.put("bootstrap.servers", "192.168.227.129:9092");
         producerConfig.put("client.id", "basic-producer");
         producerConfig.put("acks", "all");
         producerConfig.put("retries", "3");
@@ -35,46 +37,47 @@ public class Main {
         SimpleProducer producer = new SimpleProducer(producerConfig, false);
         String topic = "MY_TEST_TOPIC";
 
-        CoordinateEnumJson f = CoordinateEnumJson.newBuilder()
-                .setPos(
+        CoordinateWithEnum f = CoordinateWithEnum.newBuilder()
+                .setCoord(
                         Coordinate.newBuilder().setAltitude(23).setLat(234).setLon(231).build()
-                ).setEnum$(Suit.TRIANGLEYYYY).build();
+                ).setTestEnum(Suit.TRIANGLE).build();
         for (int i = 0; i < 5; i++) {
-            producer.send(topic, serialize("BGBG"), serialize(f));
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            producer.send(topic, serialize("BGBG"), serialize(f));
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
 
         producer.close();
     }
 
-    public static byte[] serialize(final Object obj) {
-        return org.apache.commons.lang3.SerializationUtils.serialize((Serializable) obj);
-    }
+//    public static byte[] serialize(final Object obj) {
+//        return org.apache.commons.lang3.SerializationUtils.serialize((Serializable) obj);
+//    }
 
     private static void produceUsingAvroSchemaSerializer() {
         // Copy pasted example from official confluent at https://docs.confluent.io/platform/current/schema-registry/serdes-develop/serdes-avro.html
         // Just changing the record to Manager which is the type i generated from Avro schema
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.227.129:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 org.apache.kafka.common.serialization.StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 io.confluent.kafka.serializers.KafkaAvroSerializer.class);
         props.put(KafkaAvroSerializerConfig.SCHEMA_REFLECTION_CONFIG, "true");
-        props.put("schema.registry.url", "http://192.168.227.132:8081");
+        props.put("schema.registry.url", "http://192.168.227.134:8081");
         KafkaProducer producer = new KafkaProducer(props);
 
         try {
             for (int i = 0; i < 1000; i++) {
-                CoordinateEnumJson f = CoordinateEnumJson.newBuilder()
-                        .setPos(
+                CoordinateWithEnum f = CoordinateWithEnum.newBuilder()
+                        .setCoord(
                                 Coordinate.newBuilder().setAltitude(Double.valueOf(i * 0.01)).setLat(Double.MAX_VALUE).setLon(Double.MIN_VALUE).build()
-                        ).setEnum$(Suit.TRIANGLEYYYY).build();
-                ProducerRecord<String, CoordinateEnumJson> record = new ProducerRecord<>("TRIANGLEEE", "key" + i, f);
+                        ).setTestEnum(Suit.TRIANGLE)
+                        .build();
+                ProducerRecord<String, CoordinateWithEnum> record = new ProducerRecord<>("NEW-KAFKA-DEPS-AVRO-192", "key" + i, f);
                 producer.send(record);
             }
         } catch (SerializationException e) {
@@ -86,6 +89,36 @@ public class Main {
             producer.flush();
             producer.close();
         }
+
+    }
+
+    private static void confluentProducer() {
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+                io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+                io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put("schema.registry.url", "http://localhost:8081");
+        KafkaProducer producer = new KafkaProducer(props);
+
+        String key = "key1";
+
+        for (int i = 0; i < Suit.values().length; i++) {
+            CoordinateWithEnum f = CoordinateWithEnum.newBuilder()
+                    .setCoord(Coordinate.newBuilder().setAltitude(Double.valueOf(2 * 0.01)).setLat(Double.MAX_VALUE).setLon(Double.MIN_VALUE).build())
+                    .setTestEnum(Suit.values()[i])
+                    .build();
+
+            ProducerRecord<Object, Object> record = new ProducerRecord<>("CONFLUENT", key, f);
+            try {
+                producer.send(record);
+            } catch (SerializationException e) {
+                // may need to do something with it
+            }
+        }
+
+        producer.flush();
 
     }
 

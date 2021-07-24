@@ -4,13 +4,35 @@
     "name": "CoordinateEnumJson",
     "fields": [
         {
-            "type": "org.bg.avro.structures.base.objects.Coordinate",
+            "type": {
+                "namespace": "org.bg.avro.structures.base.objects",
+                    "type": "record",
+                    "name": "Coordinate",
+                    "fields": [
+                        {
+                            "type": "double",
+                            "name": "latitude"
+                        },
+                        {
+                            "type": "double",
+                            "name": "longitude"
+                        },
+                        {
+                            "type": "double",
+                            "name": "altitude"
+                        }
+                    ]
+            },
             "name": "pos"
         },
         {
-            "type": "org.bg.avro.structures.base.objects.Suit",
-            "name": "enum",
-            "default": "TRIANGLE"
+            "type": {
+              "type": "enum",
+              "name": "Suit",
+              "namespace": "org.bg.avro.structures.base.objects",
+              "symbols": ["SQUARE", "TRIANGLE", "CIRCLE", "FOO"]
+            },
+            "name": "enumB"
         }
     ]
 }

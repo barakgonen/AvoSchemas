@@ -1,0 +1,16 @@
+{
+    "namespace": "org.bg.avro.structures.base.objects",
+    "type": "record",
+    "name": "CoordinateWithEnum",
+    "fields": [
+        {
+            "name": "coord",
+            "type": ["null",
+                    "org.bg.avro.structures.base.objects.Coordinate"]
+        },
+        {
+            "type": "org.bg.avro.structures.base.objects.Suit",
+            "name": "testEnum"
+        }
+    ]
+}
